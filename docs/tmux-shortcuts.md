@@ -2,29 +2,24 @@
 
 ## Window Navigation (NO PREFIX NEEDED!)
 
+### 🎯 BEST FOR macOS:
+- **`Option+,`** - Previous window (super easy!)
+- **`Option+.`** - Next window (super easy!)
+- **`Option+j`** - Previous window
+- **`Option+k`** - Next window
+
 ### Quick Window Switching
 - **`Ctrl+1` to `Ctrl+9`** - Jump directly to window 1-9
-- **`Shift+←/→`** - Previous/Next window (EASIEST!)
-- **`Alt+Shift+←/→`** - Previous/Next window (alternative)
+- **`F1` to `F4`** - Jump to window 1-4
+- **`Option+Shift+←/→`** - Previous/Next window
+- **`PageUp/PageDown`** - Previous/Next window
 - **`Alt+h` / `Alt+l`** - Previous/Next window (vim style)
 - **`Alt+Tab`** - Switch to last used window
-
-### Session Navigation
-- **`Shift+↑/↓`** - Previous/Next session
-
-### Window Management
-- **`Ctrl+Shift+←/→`** - Move window left/right
 
 ### Window Management
 - **`Alt+n`** - Create new window
 - **`Alt+w`** - Close current window (with confirmation)
-
-### With Prefix (Ctrl+a)
-- **`Ctrl+a c`** - Create new window
-- **`Ctrl+a n`** - Next window
-- **`Ctrl+a p`** - Previous window
-- **`Ctrl+a Tab`** - Last window
-- **`Ctrl+a [number]`** - Go to window number
+- **`Ctrl+Shift+←/→`** - Move window left/right
 
 ## Pane Navigation (NO PREFIX NEEDED!)
 
@@ -56,3 +51,15 @@
 - **`Ctrl+a s`** - List sessions
 - **`Ctrl+a S`** - Create new session
 - **`Ctrl+a $`** - Rename session
+
+## macOS Terminal Tips
+
+In Apple Terminal, make sure to:
+1. Go to Terminal → Preferences → Profiles → Keyboard
+2. Check "Use Option as Meta key"
+3. This enables Option key combinations
+
+For best tmux experience on macOS, consider using iTerm2:
+```bash
+brew install --cask iterm2
+```
