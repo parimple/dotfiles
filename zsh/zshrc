@@ -31,12 +31,9 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"  # Faster git status in large repos
 COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="yyyy-mm-dd"
 
-# Plugins (optimized selection)
+# Base plugins available everywhere
 plugins=(
   git                    # Git aliases and functions
-  zsh-autosuggestions   # Fish-like autosuggestions
-  zsh-syntax-highlighting # Syntax highlighting
-  fast-syntax-highlighting # Even faster syntax highlighting
   history-substring-search # Better history search
   command-not-found     # Suggests packages for unknown commands
   extract               # Extract any archive with 'x'
@@ -47,6 +44,17 @@ plugins=(
   copyfile             # Copy file contents
   dirhistory           # Navigate directory history with ALT+arrows
 )
+
+# Add optional plugins if they exist
+if [ -d "$ZSH/custom/plugins/zsh-autosuggestions" ]; then
+  plugins+=(zsh-autosuggestions)
+fi
+
+if [ -d "$ZSH/custom/plugins/fast-syntax-highlighting" ]; then
+  plugins+=(fast-syntax-highlighting)
+elif [ -d "$ZSH/custom/plugins/zsh-syntax-highlighting" ]; then
+  plugins+=(zsh-syntax-highlighting)
+fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -206,8 +214,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# GitHub Copilot CLI
-eval "$(github-copilot-cli alias -- "$0")"
+# GitHub Copilot CLI (if installed)
+if command -v github-copilot-cli &> /dev/null; then
+    eval "$(github-copilot-cli alias -- "$0")"
+fi
 
 # Autojump
 # Autojump - OS-aware loading
