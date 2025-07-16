@@ -4,10 +4,16 @@
 
 ### Quick Window Switching
 - **`Ctrl+1` to `Ctrl+9`** - Jump directly to window 1-9
-- **`Alt+Left/Right Arrow`** - Previous/Next window  
-- **`Alt+Shift+Left/Right`** - Previous/Next window (alternative)
+- **`Shift+←/→`** - Previous/Next window (EASIEST!)
+- **`Alt+Shift+←/→`** - Previous/Next window (alternative)
 - **`Alt+h` / `Alt+l`** - Previous/Next window (vim style)
 - **`Alt+Tab`** - Switch to last used window
+
+### Session Navigation
+- **`Shift+↑/↓`** - Previous/Next session
+
+### Window Management
+- **`Ctrl+Shift+←/→`** - Move window left/right
 
 ### Window Management
 - **`Alt+n`** - Create new window
