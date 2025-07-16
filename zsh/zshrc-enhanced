@@ -64,12 +64,20 @@ autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
 # Load essential plugins (most upvoted on Reddit)
+# Using from="gh-r" to force HTTPS instead of SSH
+zinit ice from"gh" proto"https"
 zinit light zsh-users/zsh-autosuggestions
+zinit ice from"gh" proto"https"
 zinit light zsh-users/zsh-syntax-highlighting
+zinit ice from"gh" proto"https"
 zinit light zsh-users/zsh-completions
+zinit ice from"gh" proto"https"  
 zinit light zsh-users/zsh-history-substring-search
+zinit ice from"gh" proto"https"
 zinit light agkozak/zsh-z  # Smart directory jumping
+zinit ice from"gh" proto"https"
 zinit light hlissner/zsh-autopair  # Auto close quotes, brackets, etc.
+zinit ice from"gh" proto"https"
 zinit light zdharma-continuum/fast-syntax-highlighting
 
 # ============================================================
