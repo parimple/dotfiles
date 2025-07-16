@@ -1,0 +1,259 @@
+# Modern Git Configuration - Reddit Community Favorites
+# =====================================================
+
+[user]
+    # Set your name and email
+    # name = Your Name
+    # email = your.email@example.com
+
+[core]
+    # Use delta for beautiful diffs (if installed)
+    pager = delta
+
+    # Better diff algorithm
+    algorithm = histogram
+
+    # Treat spaces before tabs and all kinds of trailing whitespace as an error
+    whitespace = space-before-tab,-indent-with-non-tab,trailing-space
+
+    # Make `git rebase` safer on macOS
+    trustctime = false
+
+    # Prevent showing files whose names contain non-ASCII symbols as unversioned
+    precomposeunicode = false
+
+    # Speed up commands involving untracked files such as `git status`
+    untrackedCache = true
+
+    # Better editor
+    editor = vim
+
+[init]
+    # Default branch name
+    defaultBranch = main
+
+[interactive]
+    # Use delta for interactive diffs
+    diffFilter = delta --color-only
+
+[delta]
+    # Beautiful diffs with delta
+    navigate = true
+    light = false
+    side-by-side = true
+    line-numbers = true
+    decorations = true
+    syntax-theme = Dracula
+    plus-style = "syntax #012800"
+    minus-style = "syntax #340001"
+    file-style = bold yellow ul
+    file-decoration-style = none
+    hunk-header-decoration-style = cyan box ul
+
+[merge]
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true
+    
+    # Better merge conflict resolution
+    conflictstyle = diff3
+
+[diff]
+    # Detect copies as well as renames
+    renames = copies
+    
+    # Better diff algorithm
+    algorithm = histogram
+    
+    # Show submodule changes
+    submodule = log
+
+[diff "bin"]
+    # Use `hexdump` to diff binary files
+    textconv = hexdump -v -C
+
+[help]
+    # Automatically correct and execute mistyped commands
+    autocorrect = 1
+
+[push]
+    # Push only current branch
+    default = current
+    
+    # Push tags with commits
+    followTags = true
+
+[pull]
+    # Only allow fast-forward pulls
+    ff = only
+
+[fetch]
+    # Remove remote branches that no longer exist
+    prune = true
+    
+    # Fetch all tags
+    pruneTags = true
+
+[rebase]
+    # Automatically stash before rebasing
+    autoStash = true
+    
+    # Show a diffstat at the end of a rebase
+    stat = true
+
+[rerere]
+    # Remember how conflicts were resolved
+    enabled = true
+
+[alias]
+    # Basic shortcuts (Reddit's most used)
+    s = status -sb
+    a = add
+    aa = add --all
+    ap = add --patch
+    c = commit
+    cm = commit -m
+    ca = commit --amend
+    can = commit --amend --no-edit
+    
+    # Branch shortcuts
+    b = branch
+    ba = branch -a
+    bd = branch -d
+    bD = branch -D
+    co = checkout
+    cob = checkout -b
+    
+    # Log shortcuts (beautiful logs)
+    l = log --oneline --graph --decorate
+    la = log --oneline --graph --decorate --all
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+    ll = log --pretty=format:'%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]' --decorate --numstat
+    
+    # Diff shortcuts
+    d = diff
+    ds = diff --staged
+    dc = diff --cached
+    dw = diff --word-diff
+    
+    # Reset shortcuts
+    unstage = reset HEAD --
+    uncommit = reset --soft HEAD~1
+    undo = reset --hard HEAD~1
+    
+    # Stash shortcuts
+    st = stash
+    stl = stash list
+    stp = stash pop
+    sta = stash apply
+    
+    # Remote shortcuts
+    f = fetch
+    fa = fetch --all
+    p = push
+    pl = pull
+    
+    # Find shortcuts
+    find = "!git ls-files | grep -i"
+    grep = grep -Ii
+    
+    # Show verbose output about tags, branches or remotes
+    tags = tag -l
+    branches = branch -a
+    remotes = remote -v
+    
+    # List contributors with number of commits
+    contributors = shortlog --summary --numbered
+    
+    # Show the user email for the current repository
+    whoami = config user.email
+    
+    # Better blame
+    blame = blame -b -w
+    
+    # Quick save (add all and commit)
+    save = !git add -A && git commit -m 'SAVEPOINT'
+    wip = !git add -u && git commit -m "WIP"
+    
+    # Undo last commit but keep changes
+    undo = reset HEAD~1 --mixed
+    
+    # Reset to clean state
+    nuke = !git clean -df && git reset --hard
+    
+    # Interactive rebase with autosquash
+    ri = rebase -i --autosquash
+    
+    # List aliases
+    aliases = config --get-regexp alias
+    
+    # Show latest tag
+    lasttag = describe --tags --abbrev=0
+    
+    # Show files ignored by git
+    ignored = ls-files -o -i --exclude-standard
+    
+    # Show modified files in last commit
+    dl = "!git ll -1"
+    
+    # Show a diff of last commit
+    dlc = diff --cached HEAD^
+    
+    # Find branches containing commit
+    fb = "!f() { git branch -a --contains $1; }; f"
+    
+    # Find tags containing commit
+    ft = "!f() { git describe --always --contains $1; }; f"
+    
+    # Find commits by source code
+    fc = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short -S$1; }; f"
+    
+    # Find commits by commit message
+    fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen  [%cn] %Cred%d' --decorate --date=short --grep=$1; }; f"
+    
+    # Show branches sorted by last modified
+    bls = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
+    
+    # Pretty log with relative dates
+    ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+    
+    # Amend the currently staged files to the latest commit
+    amend = commit --amend --reuse-message=HEAD
+    
+    # Credit an author on the latest commit
+    credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+
+[color]
+    # Use colors in Git commands that are capable of colored output
+    ui = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red
+    new = green
+    whitespace = red reverse
+
+[color "status"]
+    added = green
+    changed = yellow
+    untracked = cyan
+
+[credential]
+    # Cache credentials for 1 hour
+    helper = cache --timeout=3600
+
+[url "git@github.com:"]
+    # Use SSH for GitHub
+    insteadOf = https://github.com/
+
+[filter "lfs"]
+    # Git LFS settings
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true

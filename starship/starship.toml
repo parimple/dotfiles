@@ -1,0 +1,202 @@
+# Starship Configuration - Reddit Community Favorites
+# ==================================================
+# The fastest and most customizable prompt for any shell!
+
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+# Format (Reddit's most upvoted style)
+format = """
+[╭─](bold fg:39)$username$hostname$localip$directory$git_branch$git_status$cmd_duration
+[╰─](bold fg:39)$character"""
+
+# Right prompt
+right_format = """$all"""
+
+# Timeout for commands
+command_timeout = 1000
+
+# ======================================
+# PROMPT COMPONENTS
+# ======================================
+
+[username]
+disabled = false
+style_user = "bold fg:39"
+style_root = "bold fg:196"
+format = '[$user]($style)'
+show_always = false
+
+[hostname]
+disabled = false
+ssh_only = true
+format = '[@$hostname]($style) '
+style = "bold fg:39"
+
+[localip]
+disabled = true
+ssh_only = true
+format = '[$localipv4]($style) '
+style = "fg:244"
+
+[directory]
+format = "[$path]($style)[$read_only]($read_only_style) "
+style = "bold fg:75"
+read_only = " 󰌾"
+read_only_style = "fg:196"
+truncation_length = 3
+truncate_to_repo = true
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"~/Desktop/Projects" = " projects"
+"~/Desktop" = " desktop"
+"~/Documents" = " docs"
+"~/Downloads" = " downloads"
+"~" = " ~"
+
+[character]
+success_symbol = '[❯](bold fg:46)'
+error_symbol = '[❯](bold fg:196)'
+vimcmd_symbol = '[❮](bold fg:46)'
+
+[git_branch]
+format = '[$symbol$branch]($style) '
+symbol = ' '
+style = "bold fg:208"
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+style = "bold fg:196"
+conflicted = '='
+ahead = '⇡${count}'
+behind = '⇣${count}'
+diverged = '⇕⇡${ahead_count}⇣${behind_count}'
+untracked = '?${count}'
+stashed = '$${count}'
+modified = '!${count}'
+staged = '+${count}'
+renamed = '»${count}'
+deleted = '✘${count}'
+
+[cmd_duration]
+min_time = 2_000
+format = "took [$duration]($style) "
+style = "bold fg:226"
+
+# ======================================
+# LANGUAGE/FRAMEWORK COMPONENTS
+# ======================================
+
+[python]
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+symbol = ' '
+style = "fg:75"
+pyenv_version_name = true
+python_binary = ['python3', 'python']
+
+[nodejs]
+format = '[$symbol($version )]($style)'
+symbol = ' '
+style = "fg:70"
+detect_extensions = ['js', 'mjs', 'cjs', 'ts', 'mts', 'jsx', 'tsx', 'vue']
+detect_files = ['package.json', '.node-version', '.nvmrc']
+
+[rust]
+format = '[$symbol($version )]($style)'
+symbol = ' '
+style = "fg:208"
+
+[golang]
+format = '[$symbol($version )]($style)'
+symbol = ' '
+style = "fg:75"
+
+[docker_context]
+format = '[$symbol$context]($style) '
+symbol = ' '
+style = "fg:33"
+only_with_files = true
+detect_files = ['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
+
+[kubernetes]
+format = '[$symbol$context( \($namespace\))]($style) '
+symbol = '󱃾 '
+style = "fg:75"
+disabled = false
+
+[terraform]
+format = '[$symbol$workspace]($style) '
+symbol = '󱁢 '
+style = "fg:105"
+
+[aws]
+format = '[$symbol($profile )(\($region\) )]($style)'
+symbol = ' '
+style = "fg:208"
+
+[gcloud]
+format = '[$symbol$account(@$domain)(\($region\))]($style) '
+symbol = '☁️ '
+style = "fg:75"
+
+# ======================================
+# SYSTEM INFORMATION
+# ======================================
+
+[memory_usage]
+disabled = true
+threshold = 80
+format = '[$symbol ${ram_pct}]($style) '
+symbol = ' '
+style = 'bold fg:196'
+
+[battery]
+disabled = false
+full_symbol = '󰁹 '
+charging_symbol = '󰂄 '
+discharging_symbol = '󰂃 '
+empty_symbol = '󰂎 '
+
+[[battery.display]]
+threshold = 30
+style = 'bold fg:196'
+
+[[battery.display]]
+threshold = 70
+style = 'bold fg:226'
+
+[[battery.display]]
+threshold = 100
+style = 'bold fg:46'
+
+[time]
+disabled = true
+format = '[$time]($style) '
+time_format = '%H:%M'
+style = 'fg:244'
+
+# ======================================
+# SHELL SPECIFIC
+# ======================================
+
+[shell]
+disabled = true
+fish_indicator = '󰈺 '
+powershell_indicator = '_'
+bash_indicator = ' '
+zsh_indicator = ' '
+style = 'fg:244'
+
+[status]
+disabled = false
+format = '[$symbol$status]($style) '
+symbol = '✘ '
+style = 'bold fg:196'
+not_found_symbol = '🔍 '
+not_executable_symbol = '🚫 '
+sigint_symbol = '🧱 '
+signal_symbol = '⚡ '
