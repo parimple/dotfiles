@@ -2,6 +2,8 @@
 # =====================================================
 
 [user]
+	name = Patryk Pyzel
+	email = patrykpyzel@gmail.com
     # Set your name and email
     # name = Your Name
     # email = your.email@example.com
@@ -249,7 +251,6 @@
 
 [url "git@github.com:"]
     # Use SSH for GitHub
-    insteadOf = https://github.com/
 
 [filter "lfs"]
     # Git LFS settings
