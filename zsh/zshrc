@@ -1,0 +1,560 @@
+# Claude Code Optimized ZSH Configuration
+# =========================================
+
+# Colors for terminal
+export GREEN='\033[0;32m'
+export YELLOW='\033[1;33m'
+export RED='\033[0;31m'
+export BLUE='\033[0;34m'
+export NC='\033[0m' # No Color
+
+# Essential Environment Variables
+export LC_ALL=en_US.UTF-8
+export ZSH="/Users/patrykpyzel/.oh-my-zsh"
+export PATH="$HOME/.pyenv/bin:$PATH"
+export PATH="$PATH:/Users/patrykpyzel/.lmstudio/bin"
+export PATH="$PATH:~/go/bin"
+export PATH="/opt/homebrew/opt/python@3.10/bin:$PATH"
+export PATH="/Users/patrykpyzel/.codeium/windsurf/bin:$PATH"
+
+# Load API Keys from secure .env file
+[ -f ~/.env ] && source ~/.env
+
+# Theme
+ZSH_THEME="robbyrussell"
+
+# Performance Optimization
+DISABLE_UNTRACKED_FILES_DIRTY="true"  # Faster git status in large repos
+COMPLETION_WAITING_DOTS="true"
+HIST_STAMPS="yyyy-mm-dd"
+
+# Plugins (optimized selection)
+plugins=(
+  git                    # Git aliases and functions
+  zsh-autosuggestions   # Fish-like autosuggestions
+  zsh-syntax-highlighting # Syntax highlighting
+  fast-syntax-highlighting # Even faster syntax highlighting
+  history-substring-search # Better history search
+  command-not-found     # Suggests packages for unknown commands
+  extract               # Extract any archive with 'x'
+  z                     # Frecent directory jumping
+  sudo                  # Press ESC twice to add sudo
+  web-search           # Search web from terminal
+  copypath             # Copy current path
+  copyfile             # Copy file contents
+  dirhistory           # Navigate directory history with ALT+arrows
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# ==========================================
+# Claude Code Specific Aliases & Functions
+# ==========================================
+
+# SSH z automatycznym tmux
+alias oracle='ssh -t oracle'
+alias oracle1='ssh oracle1 -t "tmux new-session -A -s main"'
+alias oracle2='ssh oracle2 -t "tmux new-session -A -s main"'
+alias oracle-new='ssh oracle -t "tmux new-session -t main -s oracle-$$"'
+alias oracle-1='ssh oracle -t "tmux attach-session -t main \; select-window -t 0"'
+alias oracle-2='ssh oracle -t "tmux attach-session -t main \; select-window -t 1"'
+alias evertz='ssh -t evertz'
+alias evertz-notmux='ssh -t evertz'
+
+# Lokalizacje Evertz
+alias evertz-szwedzka='ssh evertz-szwedzka -t "tmux new-session -A -s work"'
+alias evertz-zegadlowicza='ssh evertz-zegadlowicza -t "tmux new-session -A -s work"'
+alias evertz-fantastic='ssh evertz-fantastic -t "tmux new-session -A -s work"'
+
+# Projekty z tmux
+alias zgdk='ssh oracle -t "tmux new-session -A -s zgdk -c ~/Projects/zgdk"'
+alias boht='ssh oracle -t "tmux new-session -A -s boht -c ~/Projects/bohtPY"'
+alias golem='ssh oracle -t "tmux new-session -A -s golem -c ~/Projects/gollm"'
+
+# Połączenia z auto-reconnect dla mobilnych
+alias moracle='~/.ssh/scripts/mobile-ssh.sh oracle'
+alias mevertz='~/.ssh/scripts/mobile-ssh.sh evertz'
+
+# Evertz lokalnie (tylko w domu)
+alias evertz-local='ssh evertz-local -t "tmux new-session -A -s work"'
+alias zagadka='ssh oracle zagadka'
+alias cr='ssh evertz content-rules'
+
+# Task Master shortcuts (jeśli potrzebne)
+alias tm='task-master'
+alias tml='task-master list'
+alias tmn='task-master next'
+alias tms='task-master show'
+alias tmd='task-master set-status --status=done --id='
+
+# Project navigation with PARA method
+alias proj='cd ~/Desktop/Projects'
+alias areas='cd ~/Desktop/Areas'
+alias res='cd ~/Desktop/Resources'
+alias arch='cd ~/Desktop/Archive'
+
+# Quick project access
+alias evertz-cs='cd ~/Desktop/Projects/Evertz/Projects/content-service'
+alias evertz-scm='cd ~/Desktop/Projects/Evertz/Projects/scheduled-content-management'
+
+# SSH shortcuts
+alias sshevertz='ssh evertz'
+alias sshoracle='ssh oracle'
+alias ssho1='ssh oracle1'
+alias ssho2='ssh oracle2'
+
+# Simple SSH (ssh oracle zgdk)
+# ssh() {
+#     if [ "$1" = "oracle" ] && [ -n "$2" ]; then
+#         ~/simple-ssh.sh "$2" oracle
+#     elif [ "$1" = "evertz" ] && [ -n "$2" ]; then
+#         ~/evertz-ssh.sh "$2"
+#     else
+#         command ssh "$@"
+#     fi
+# }
+
+# SSH with screen
+alias sshse='ssh -t evertz screen -R'
+alias sshso='ssh -t oracle screen -R'
+
+# SSH with tmux (if you want to try it)
+alias sshte='ssh -t evertz tmux attach || tmux new'
+alias sshto='ssh -t oracle tmux attach || tmux new'
+
+# Sync dotfiles
+alias dotsync='~/sync-dotfiles.sh'
+alias dotsync-all='~/sync-dotfiles.sh all'
+alias dotsync-pull='~/sync-dotfiles.sh pull'
+
+# Auto-sync dotfiles
+alias autosync='~/auto-sync-dotfiles.sh'
+alias autosync-start='~/auto-sync-dotfiles.sh background'
+alias autosync-stop='~/auto-sync-dotfiles.sh stop'
+alias autosync-status='ps aux | grep -v grep | grep auto-sync-dotfiles && echo "Auto-sync działa" || echo "Auto-sync nie działa"'
+
+
+# Git workflow enhancements for Claude Code
+alias gai='git add -i'  # Interactive add
+alias gcm!='git commit -m'  # Quick commit
+alias gundo='git reset --soft HEAD~1'  # Undo last commit
+alias gdiff='git diff --cached'  # Show staged changes
+alias glog1='git log --oneline -10'  # Quick log view
+
+# Enhanced file operations
+alias ll='ls -lah'
+alias lt='ls -lhat | head -20'  # Latest modified files
+alias tree='tree -I "node_modules|__pycache__|.git"'
+
+# Python/Node development
+alias py='python3'
+alias pip='pip3'
+alias pyvenv='python3 -m venv venv && source venv/bin/activate'
+alias npmr='npm run'
+alias npmd='npm run dev'
+alias npmt='npm test'
+
+# Claude Code context management
+claude-context() {
+  if [ -f "CLAUDE.md" ]; then
+    echo "Current CLAUDE.md context:"
+    head -20 CLAUDE.md
+  else
+    echo "No CLAUDE.md found in current directory"
+  fi
+}
+
+# Quick search functions
+search() {
+  rg "$1" --type-add 'code:*.{js,ts,py,java,go,rs,cpp,c,h}' -t code
+}
+
+# Quick edit common files
+alias zshrc='${EDITOR:-vim} ~/.zshrc'
+alias claudemd='${EDITOR:-vim} ./CLAUDE.md'
+
+# Funkcja do edycji z auto-sync
+edit_and_sync() {
+    local file=$1
+    ${EDITOR:-vim} "$file"
+    
+    # Sprawdź czy plik się zmienił
+    if [ -f "$file" ]; then
+        echo -e "${YELLOW}Synchronizuję zmiany...${NC}"
+        ~/sync-dotfiles.sh all >/dev/null 2>&1 &
+        echo -e "${GREEN}✓ Synchronizacja w tle${NC}"
+    fi
+}
+
+# Aliasy z auto-sync
+alias zshrc-sync='edit_and_sync ~/.zshrc && source ~/.zshrc'
+alias screenrc-sync='edit_and_sync ~/.screenrc'
+alias tmux-sync='edit_and_sync ~/.tmux.conf'
+
+# ==========================================
+# Development Environment
+# ==========================================
+
+# Pyenv initialization
+eval "$(pyenv init -)"
+
+# NVM initialization
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# GitHub Copilot CLI
+eval "$(github-copilot-cli alias -- "$0")"
+
+# Autojump
+[[ -s /Users/patrykpyzel/.autojump/etc/profile.d/autojump.sh ]] && source /Users/patrykpyzel/.autojump/etc/profile.d/autojump.sh
+
+# Remote clipboard (if needed)
+alias remotecopy='~/clipboard_client.zsh copy'
+alias remotepaste='~/clipboard_client.zsh paste'
+
+# Load local environment
+[ -s "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
+
+# ==========================================
+# Performance & Quality of Life
+# ==========================================
+
+# Better history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_VERIFY
+setopt SHARE_HISTORY
+
+# Better directory navigation
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHDMINUS
+
+# Completion improvements
+autoload -U compinit && compinit -u
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# Quick directory creation and navigation
+mkcd() {
+  mkdir -p "$1" && cd "$1"
+}
+
+# Extract any archive
+extract() {
+  if [ -f $1 ]; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1   ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *)           echo "'$1' cannot be extracted" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+# Show current git branch in prompt (if not using theme)
+# parse_git_branch() {
+#   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+# }
+
+# Custom prompt (uncomment if you want to override theme)
+# PROMPT='%{$fg[cyan]%}%n@%m:%{$fg[yellow]%}%~%{$fg[green]%}$(parse_git_branch)%{$reset_color%} $ '
+
+# ==========================================
+# Security Notes
+# ==========================================
+# API keys are now loaded from ~/.env file (line 14)
+# Remember to add .env to .gitignore in any projects
+
+# Startup help message
+show_startup_help() {
+    echo "SSH:"
+    echo "  ssh oracle zgdk"
+    echo "  ssh oracle boht"
+    echo "  ssh oracle boht-dev"
+    echo "  ssh evertz content-rules"
+}
+
+# Alias do pełnej pomocy
+alias help-ssh='cat ~/ssh-commands-cheatsheet.md'
+alias help='show_startup_help'
+
+
+# Pokaż pomoc przy starcie
+# show_startup_help
+# Oracle n8n tunnel alias
+alias n8n-tunnel='~/bin/oracle-n8n-tunnel.sh'
+alias sso="~/screenshot-to-oracle.sh"
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# ==========================================
+# Advanced Productivity Enhancements
+# ==========================================
+
+# FZF Configuration
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border --info=inline'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
+
+# Advanced FZF functions
+# Kill process with fzf
+fkill() {
+  local pid
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+  if [ "x$pid" \!= "x" ]
+  then
+    echo $pid | xargs kill -${1:-9}
+  fi
+}
+
+# Git branch checkout with fzf
+fbr() {
+  local branches branch
+  branches=$(git --no-pager branch -vv) &&
+  branch=$(echo "$branches" | fzf +m) &&
+  git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+}
+
+# Search history with fzf
+fh() {
+  print -z $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
+}
+
+# cd to selected directory including hidden
+fcd() {
+  local dir
+  dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m) && cd "$dir"
+}
+
+# Open file with default editor
+fe() {
+  local files
+  IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+  [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+}
+
+# Better directory navigation
+setopt AUTO_PUSHD           # Push directories on every cd
+setopt PUSHD_IGNORE_DUPS    # No duplicates in dir stack
+setopt PUSHD_SILENT         # No dir stack after pushd/popd
+alias d='dirs -v'
+for index ({1..9}) alias "$index"="cd +${index}"; unset index
+
+# Smart aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# Git aliases (additional to oh-my-zsh)
+alias gs='git status'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gl='git log --oneline --graph --decorate'
+alias gla='git log --oneline --graph --decorate --all'
+alias gp='git pull'
+alias gpu='git push'
+alias gcm='git commit -m'
+
+# Productivity aliases
+alias h='history'
+alias j='z'  # Use z for jumping
+alias c='clear'
+alias path='echo -e ${PATH//:/\\n}'
+alias reload='source ~/.zshrc'
+alias zshconfig='${EDITOR:-vim} ~/.zshrc'
+alias tmuxconfig='${EDITOR:-vim} ~/.tmux.conf'
+
+# Quick directory access
+alias desk='cd ~/Desktop'
+alias dl='cd ~/Downloads'
+alias docs='cd ~/Documents'
+alias proj='cd ~/Desktop/Projects'
+
+# System shortcuts
+alias myip='curl -s ifconfig.me'
+alias localip='ipconfig getifaddr en0'
+alias ports='netstat -tlnp 2>/dev/null || sudo lsof -iTCP -sTCP:LISTEN -n -P'
+
+# Better command defaults
+alias grep='grep --color=auto'
+alias df='df -h'
+alias du='du -h'
+alias free='free -h'
+alias top='htop 2>/dev/null || top'
+
+# Tmux shortcuts
+alias ta='tmux attach -t'
+alias ts='tmux new-session -s'
+alias tl='tmux list-sessions'
+alias tk='tmux kill-session -t'
+alias tmuxkillall='tmux kill-server'
+
+# Docker shortcuts (if docker is installed)
+if command -v docker &> /dev/null; then
+  alias dps='docker ps'
+  alias dpsa='docker ps -a'
+  alias dimg='docker images'
+  alias dexec='docker exec -it'
+  alias dlogs='docker logs -f'
+  alias dstop='docker stop $(docker ps -q)'
+  alias drm='docker rm $(docker ps -a -q)'
+  alias drmi='docker rmi $(docker images -q)'
+fi
+
+# Performance: Lazy load nvm
+export NVM_LAZY_LOAD=true
+export NVM_COMPLETION=true
+
+# ZSH Options for better experience
+setopt EXTENDED_HISTORY          # Write timestamp to history
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicates first
+setopt HIST_IGNORE_DUPS          # Ignore duplicates
+setopt HIST_IGNORE_ALL_DUPS      # Remove old duplicates
+setopt HIST_FIND_NO_DUPS         # No display duplicates
+setopt HIST_SAVE_NO_DUPS         # No write duplicates
+setopt SHARE_HISTORY             # Share history between sessions
+setopt INC_APPEND_HISTORY        # Add commands immediately
+
+# Better completion
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
+zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'
+
+# Auto-suggestions configuration
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666"
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+bindkey '^ ' autosuggest-accept  # Ctrl+Space to accept suggestion
+
+# History substring search bindings
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
+
+# Quick man page access
+man() {
+    LESS_TERMCAP_md=$'\e[01;31m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_se=$'\e[0m' \
+    LESS_TERMCAP_so=$'\e[01;44;33m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[01;32m' \
+    command man "$@"
+}
+
+# Extract function (works with extract plugin)
+extract() {
+  if [ -f $1 ]; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1     ;;
+      *.tar.gz)    tar xzf $1     ;;
+      *.bz2)       bunzip2 $1     ;;
+      *.rar)       unrar e $1     ;;
+      *.gz)        gunzip $1      ;;
+      *.tar)       tar xf $1      ;;
+      *.tbz2)      tar xjf $1     ;;
+      *.tgz)       tar xzf $1     ;;
+      *.zip)       unzip $1       ;;
+      *.Z)         uncompress $1  ;;
+      *.7z)        7z x $1        ;;
+      *)     echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+# Create and cd into directory
+mkcd() {
+  mkdir -p "$1" && cd "$1"
+}
+
+# Quick backup
+backup() {
+  cp "$1" "$1.backup-$(date +%Y%m%d-%H%M%S)"
+}
+
+# Performance monitoring
+alias cpu='top -o cpu'
+alias mem='top -o mem'
+
+export PATH="$HOME/.fzf/bin:$PATH"
+
+# ==========================================
+# New Productivity Tools Configuration
+# ==========================================
+
+# Zoxide - smarter cd
+eval "$(zoxide init zsh)"
+alias cd='z'  # Replace cd with zoxide
+
+# Eza - modern ls
+alias ls='eza --icons --group-directories-first'
+alias ll='eza -la --icons --group-directories-first'
+alias la='eza -a --icons --group-directories-first'
+alias lt='eza --tree --icons -a -I ".git|__pycache__|.mypy_cache|.ipynb_checkpoints"'
+alias ltt='eza --tree --icons -a -I ".git|__pycache__|.mypy_cache|.ipynb_checkpoints" -L 2'
+alias lttt='eza --tree --icons -a -I ".git|__pycache__|.mypy_cache|.ipynb_checkpoints" -L 3'
+
+# Git delta configuration
+export GIT_PAGER='delta'
+export DELTA_FEATURES='+side-by-side line-numbers decorations'
+export DELTA_SYNTAX_THEME='Dracula'
+
+# Bat configuration (better cat)
+export BAT_THEME="Dracula"
+alias cat='bat --style=plain'
+alias catn='bat --style=numbers'
+alias catf='bat --style=full'
+
+# Btop alias
+alias top='btop'
+
+# HTTPie aliases
+alias GET='http GET'
+alias POST='http POST'
+alias PUT='http PUT'
+alias DELETE='http DELETE'
+
+# Lazygit alias
+alias lg='lazygit'
+
+# TLDR configuration
+export TLDR_AUTO_UPDATE_DISABLED=1
+
+# Quick JSON/YAML processing
+alias json='jq .'
+alias yaml='yq .'
+
+# Glow for markdown
+alias md='glow'
+alias readme='glow README.md 2>/dev/null || glow readme.md 2>/dev/null || echo "No README found"'
+
+# NCDU alias
+alias du='ncdu --color dark' < /dev/null

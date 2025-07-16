@@ -1,0 +1,32 @@
+{
+  "globalShortcut": "Ctrl+Space",
+  "mcpServers": {
+    "filesystem": {
+      "command": "node",
+      "args": ["/Users/patrykpyzel/mcp-servers/mcp-official-servers/src/filesystem/dist/index.js", "/Users/patrykpyzel/Desktop", "/Users/patrykpyzel/Documents"],
+      "env": {}
+    },
+    "git": {
+      "command": "node", 
+      "args": ["/Users/patrykpyzel/mcp-servers/mcp-official-servers/src/git/dist/index.js"],
+      "env": {}
+    },
+    "memory": {
+      "command": "node",
+      "args": ["/Users/patrykpyzel/mcp-servers/mcp-official-servers/src/memory/dist/index.js"],
+      "env": {}
+    },
+    "fetch": {
+      "command": "node",
+      "args": ["/Users/patrykpyzel/mcp-servers/mcp-official-servers/src/fetch/dist/index.js"],
+      "env": {
+        "PROXY_URL": ""
+      }
+    },
+    "sequential-thinking": {
+      "command": "node",
+      "args": ["/Users/patrykpyzel/mcp-servers/mcp-official-servers/src/sequentialthinking/dist/index.js"],
+      "env": {}
+    }
+  }
+}
