@@ -4,7 +4,7 @@
 
 set -e
 
-DOTFILES_REPO="https://github.com/USERNAME/dotfiles.git"
+DOTFILES_REPO="https://github.com/parimple/dotfiles.git"
 DOTFILES_DIR="$HOME/dotfiles"
 
 # Colors

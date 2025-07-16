@@ -21,14 +21,14 @@ Centralized configuration for all my machines - macOS, Linux, and remote servers
 
 ### On a new machine:
 ```bash
-git clone https://github.com/USERNAME/dotfiles.git ~/dotfiles
+git clone https://github.com/parimple/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ./install.sh
 ```
 
 ### Or one-liner:
 ```bash
-curl -sL https://raw.githubusercontent.com/USERNAME/dotfiles/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/parimple/dotfiles/main/install.sh | bash
 ```
 
 ## 📖 Usage
