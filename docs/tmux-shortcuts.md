@@ -3,10 +3,12 @@
 ## Window Navigation (NO PREFIX NEEDED!)
 
 ### 🎯 BEST FOR macOS:
-- **`Option+,`** - Previous window (super easy!)
-- **`Option+.`** - Next window (super easy!)
-- **`Option+j`** - Previous window
-- **`Option+k`** - Next window
+- **`Option+[`** - Previous window (EASIEST!)
+- **`Option+]`** - Next window (EASIEST!)
+- **`Option+Tab`** - Next window (like browser)
+- **`Option+Shift+Tab`** - Previous window
+- **`Option+j`** - Previous window (vim style)
+- **`Option+k`** - Next window (vim style)
 
 ### Quick Window Switching
 - **`Ctrl+1` to `Ctrl+9`** - Jump directly to window 1-9
