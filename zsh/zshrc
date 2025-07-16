@@ -264,8 +264,6 @@ mkcd() {
   mkdir -p "$1" && cd "$1"
 }
 
-fi # End of FZF functions
-
 # Extract any archive
 extract() {
   if [ -f $1 ]; then
@@ -382,6 +380,8 @@ fe() {
   IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
   [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 }
+
+fi # End of FZF functions
 
 # Better directory navigation
 setopt AUTO_PUSHD           # Push directories on every cd
