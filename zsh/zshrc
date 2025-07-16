@@ -619,4 +619,4 @@ fi
 # NCDU alias (if installed)
 if command -v ncdu &> /dev/null; then
     alias du='ncdu --color dark'
-fi < /dev/null
+fi < /dev/nullexport PATH="$HOME/bin:$PATH"
