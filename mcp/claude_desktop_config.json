@@ -27,6 +27,11 @@
       "command": "node",
       "args": ["/Users/patrykpyzel/mcp-servers/mcp-official-servers/src/sequentialthinking/dist/index.js"],
       "env": {}
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"],
+      "env": {}
     }
   }
 }
