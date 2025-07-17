@@ -120,6 +120,47 @@ Check backup directory shown after sync completes.
 - Backups are created before overwriting
 - Git commits are automatic on sync
 
+## 🤖 Claude Code Integration
+
+This dotfiles setup is **optimized for Claude Code** workflows:
+
+### CLAUDE.md - Project Context System
+Every project should have a `CLAUDE.md` file that provides Claude with essential context:
+
+```bash
+# Quick create in any project
+claude-init  # Creates CLAUDE.md from template
+```
+
+**CLAUDE.md tells Claude:**
+- How to understand your project structure
+- What coding standards to follow
+- Which commands to use for testing/building
+- Project-specific instructions
+
+See [CLAUDE-USAGE.md](docs/CLAUDE-USAGE.md) for complete guide and [examples](examples/).
+
+### MCP Server Management
+```bash
+mcplist          # List all configured MCP servers
+mcpdebug         # Interactive debugging menu
+mcplog           # Real-time log monitoring
+mcp-test SERVER  # Test specific server
+```
+
+### AI-Optimized Tools
+Install modern CLI tools that provide clean output for Claude:
+```bash
+./scripts/install-ai-tools.sh
+```
+
+This installs:
+- **ripgrep** - 5-10x faster search with AI-friendly output
+- **fd** - Intuitive file finding (replaces find)
+- **bat** - Syntax highlighting for code review
+- **jq/yq** - JSON/YAML processing
+- Plus many more productivity tools
+
 ## 🚧 TODO
 
 - [ ] Add automatic GitHub push
