@@ -184,6 +184,24 @@ claude-context() {
   fi
 }
 
+# Claude Code productivity aliases (from 2025 research)
+alias mcplist='claude mcp list'
+alias mcplog='tail -f ~/Library/Logs/Claude/*.log 2>/dev/null || echo "No Claude logs found"'
+alias mcpdebug='~/dotfiles/scripts/mcp-debug-tools.sh'
+alias claude-init='cp ~/dotfiles/templates/CLAUDE.md . && echo "Created CLAUDE.md"'
+
+# Modern CLI tools for AI-friendly output
+if command -v rg &> /dev/null; then
+  alias grep='rg'
+fi
+if command -v fd &> /dev/null; then
+  alias find='fd'
+fi
+if command -v bat &> /dev/null; then
+  alias cat='bat --style=plain'
+  alias catn='bat --style=numbers'
+fi
+
 # Quick search functions
 search() {
   rg "$1" --type-add 'code:*.{js,ts,py,java,go,rs,cpp,c,h}' -t code
